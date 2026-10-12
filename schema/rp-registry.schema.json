@@ -52,6 +52,11 @@
           "items": { "type": "string", "enum": ["login", "vc-verify", "delegation"] },
           "description": "Declared integrations. Display-only: never a security guarantee."
         },
+        "tier": {
+          "type": "string",
+          "enum": ["first-party", "verified-partner", "community"],
+          "description": "Ecosystem tier. Optional; when absent it is derived from `official` (`official: true` means `first-party`, otherwise `community`). Display-only: it says who maintains the entry, never how safe the site is."
+        },
         "challenge": {
           "type": "string",
           "pattern": "^aidid-rp-verify-[0-9a-f]{16,64}$",
@@ -95,7 +100,8 @@
       "frontend/scripts/verify-rp-registry.mjs"
     ],
     "enumBindings": [
-      { "pointer": "/$defs/entry/properties/capabilities/items/enum", "source": "RP_CAPABILITIES" }
+      { "pointer": "/$defs/entry/properties/capabilities/items/enum", "source": "RP_CAPABILITIES" },
+      { "pointer": "/$defs/entry/properties/tier/enum", "source": "RP_TIERS" }
     ],
     "honestLimit": "Phase 0 is a repository snapshot. The on-chain RP registry (phase 1) is not deployed; `scripts/verify-rp-registry.mjs` checks each origin's /.well-known challenge in CI."
   }

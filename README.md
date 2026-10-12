@@ -73,10 +73,28 @@ The [`validate-registry`](.github/workflows/validate.yml) workflow:
 Anything else is fail-closed: a mismatch, a structural error, a live check that could
 not run, or a pull request touching any other file is **not** merged.
 
-> **Fork pull requests:** GitHub gives the workflow a read-only token for pull requests
-> opened from a fork, so the automatic merge cannot run. Your checks still run and
-> still gate the entry; a maintainer merges it manually. If you have write access,
-> open the branch in this repository to get the automatic merge.
+> **Fork pull requests — no collaborator access needed:** the workflow runs in this
+> repository's context (`pull_request_target`), so its token can merge your pull
+> request. You do **not** need an invitation to this repository, an account on our
+> side, or a manual review: a verified pull request from a fork is merged exactly like
+> any other. The head branch stays in your fork, so we cannot delete it for you.
+
+### Why the automatic merge is safe
+
+`pull_request_target` runs our workflow with a token that can write, so the workflow
+deliberately **never executes anything from your pull request**:
+
+- it checks out **this repository only**, at the base commit — never your branch;
+- the validator and Node come from this repository: there is no `npm install` /
+  `npm ci`, and no script from your pull request is run;
+- your `rp-registry.json` is fetched through the GitHub API and treated as **inert
+  data** — it is parsed as JSON and compared against a live challenge fetch, never
+  executed;
+- the only path your pull request is allowed to change is `rp-registry.json`.
+
+If a future change makes the workflow check out a pull request branch, install the
+pull request's dependencies, or run a script from the pull request, this safety
+argument no longer holds — that change would be a vulnerability.
 
 ## Review standard
 

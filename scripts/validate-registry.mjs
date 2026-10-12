@@ -44,6 +44,7 @@ const EXPECTED_VERSION = '1';
 const CHALLENGE_PATTERN = /^aidid-rp-verify-[0-9a-f]{16,64}$/;
 const DID_PATTERN = /^did:msg:[A-Za-z0-9._:%-]+$/;
 const CAPABILITIES = new Set(['login', 'vc-verify', 'delegation']);
+const TIERS = new Set(['first-party', 'verified-partner', 'community']);
 const STATUSES = new Set(['verified', 'pending']);
 const TOP_LEVEL_KEYS = new Set(['schema', 'version', 'source', 'updatedAt', 'notes', 'entries']);
 const ENTRY_KEYS = new Set([
@@ -52,6 +53,7 @@ const ENTRY_KEYS = new Set([
   'homepage',
   'did',
   'capabilities',
+  'tier',
   'challenge',
   'status',
   'registeredAt',
@@ -204,6 +206,9 @@ const main = async () => {
           if (!CAPABILITIES.has(capability)) fail(`${label}.capabilities has an unknown value`, String(capability));
         }
       }
+    }
+    if (entry.tier !== undefined && !TIERS.has(entry.tier)) {
+      fail(`${label}.tier is first-party | verified-partner | community`, String(entry.tier));
     }
     if (entry.registeredAt !== undefined && !/^\d{4}-\d{2}-\d{2}$/.test(String(entry.registeredAt))) {
       fail(`${label}.registeredAt is a YYYY-MM-DD date`, String(entry.registeredAt));

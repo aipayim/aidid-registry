@@ -27,5 +27,5 @@ Paste the response body from `https://<your origin>/.well-known/aidid-rp.txt`:
 ### Notes
 
 - A `did:msg:…` field is recommended now and required from on-chain phase 1.
-- If the challenge check passes and this pull request changes only `rp-registry.json`, it is merged automatically.
-- Pull requests opened from a fork cannot be auto-merged (the workflow token is read-only for forks); a maintainer will merge those.
+- If the challenge check passes and this pull request changes only `rp-registry.json`, it is merged automatically — including when the pull request comes from a fork.
+- No invitation or manual review is needed. If you opened this from a fork, the head branch stays in your fork; we cannot delete it for you.
