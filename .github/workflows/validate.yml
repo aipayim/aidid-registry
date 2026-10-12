@@ -61,6 +61,8 @@ concurrency:
 jobs:
   validate-and-merge:
     name: Validate rp-registry.json
+    # A draft cannot be merged; wait for `ready_for_review` rather than failing red.
+    if: ${{ !github.event.pull_request.draft }}
     runs-on: ubuntu-latest
     steps:
       # SECURITY STEP 1: check out the BASE repository only. Never the head ref.
