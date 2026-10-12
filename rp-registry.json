@@ -1,0 +1,19 @@
+{
+  "schema": "aidid.rp-registry",
+  "version": "1",
+  "source": "public-repo",
+  "updatedAt": "2026-10-11",
+  "notes": "Public AIDID integration registry (aipayim/aidid-registry). An entry only proves that the origin serves the registered challenge at https://<origin>/.well-known/aidid-rp.txt — it is NOT a security or reputation endorsement. `did` is recommended now and required from on-chain phase 1. Validate with: node scripts/validate-registry.mjs",
+  "entries": [
+    {
+      "origin": "https://aidid.im",
+      "name": "AIDID",
+      "homepage": "https://aidid.im",
+      "capabilities": ["login"],
+      "challenge": "aidid-rp-verify-1d9a73c8265a1da28a764a631d7f4d40",
+      "status": "verified",
+      "registeredAt": "2026-10-09",
+      "official": true
+    }
+  ]
+}
